@@ -28,7 +28,7 @@ def create_player(current_user_token):
     response = player_schema.dump(player)
     return jsonify(response)
 
-@api.route('/playerinfo', methods = ['GET'])
+@api.route('/playerinfos', methods = ['GET'])
 @token_required
 def get_player(current_user_token):
     a_user = current_user_token.token
@@ -39,7 +39,7 @@ def get_player(current_user_token):
 
 
 
-@api.route('/playerinfo/<id>', methods = ['POST','PUT'])
+@api.route('/playerinfos/<id>', methods = ['POST','PUT'])
 @token_required
 def update_player(current_user_token,id):
     player = Player.query.get(id) 
@@ -54,7 +54,7 @@ def update_player(current_user_token,id):
     return jsonify(response)
 
 
-@api.route('/playerinfo/<id>', methods = ['DELETE'])
+@api.route('/playerinfos/<id>', methods = ['DELETE'])
 @token_required
 def delete_player(current_user_token, id):
     player = Player.query.get(id)
