@@ -62,3 +62,22 @@ def delete_player(current_user_token, id):
     db.session.commit()
     response = player_schema.dump(player)
     return jsonify(response)
+
+@api.route('/save_player_from_api', methods=['POST'])
+@token_required
+def save_player_from_api(current_user_token):
+    try:
+        name = request.json.get('name')
+        team = request.json.get('team')
+        number = request.json.get('number')
+        position = request.json.get('position')
+        
+        player = Player(name=name, team=team, number=number, position=position, user_token=current_user_token.token)
+        db.session.add(player)
+        db.session.commit()
+
+        response = player_schema.dump(player)
+        return jsonify(response)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
